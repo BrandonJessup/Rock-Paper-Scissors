@@ -1,7 +1,7 @@
 /*
  * Authored by Brandon Jessup
  * on June 3rd 2019
- * 
+ *
  * A game of rock-paper-scissors played against a computer opponent.
  */
 
@@ -10,30 +10,26 @@ import java.util.Random;
 
 public class RockPaperScissors {
 	private static String playerName;
-	private static boolean playAgain = true;
+	private static boolean playerWantsToPlay = true;
 	private static String playerMove;
 	private static String computerMove;
 	private static String winner;
-	
+
 	public static void main(String[] args) {
 		playerNamePrompt();
-		while(playerWantsToPlay()) {
+		while(playerWantsToPlay) {
 			startNewRound();
 			playAgainPrompt();
 		}
 		displayExitMessage();
 	}
-	
+
 	private static void playerNamePrompt() {
 		System.out.print("Enter your name: ");
 		Scanner input = new Scanner(System.in);
 		playerName = input.next();
 	}
-	
-	private static boolean playerWantsToPlay() {
-		return playAgain;
-	}
-	
+
 	private static void startNewRound() {
 		announceGameStart();
 		getAndValidatePlayerMove();
@@ -42,11 +38,11 @@ public class RockPaperScissors {
 		determineWinner();
 		displayWinner();
 	}
-	
+
 	private static void announceGameStart() {
 		System.out.println("\nStarting new game...");
 	}
-	
+
 	private static void getAndValidatePlayerMove() {
 		String move = movePrompt();
 		while (!moveIsValid(move)) {
@@ -55,13 +51,13 @@ public class RockPaperScissors {
 		}
 		playerMove = move;
 	}
-	
+
 	private static String movePrompt() {
 		System.out.println("What will you throw?");
 		Scanner input = new Scanner(System.in);
 		return input.next();
 	}
-	
+
 	private static boolean moveIsValid(String move) {
 		if (move.contentEquals("rock") ||
 			move.contentEquals("paper") ||
@@ -70,7 +66,7 @@ public class RockPaperScissors {
 		else
 			return false;
 	}
-	
+
 	private static void getComputerMove() {
 		int randomNumber = generateNumberInRangeInclusive(0, 2);
 		if (randomNumber == 0)
@@ -80,20 +76,20 @@ public class RockPaperScissors {
 		else
 			computerMove = "scissors";
 	}
-	
+
 	private static int generateNumberInRangeInclusive(int lowerBound, int upperBound) {
 		upperBound += 1;
 		Random rng = new Random();
 		return rng.nextInt(upperBound - lowerBound) + lowerBound;
 	}
-	
+
 	private static void displayChoices() {
 		String output = "";
 		output += "\n" + playerName + " chooses " + playerMove;
 		output += ", computer chooses " + computerMove + ".";
 		System.out.println(output);
 	}
-	
+
 	private static void determineWinner() {
 		if (playerMove.contentEquals(computerMove))
 			winner = "neither";
@@ -116,7 +112,7 @@ public class RockPaperScissors {
 				winner = "player";
 		}
 	}
-	
+
 	private static void displayWinner() {
 		String output = "";
 		if (winner.contentEquals("neither"))
@@ -131,32 +127,32 @@ public class RockPaperScissors {
 		}
 		System.out.println(output);
 	}
-	
+
 	private static String capitalize(String string) {
 		return string.substring(0, 1).toUpperCase() + string.substring(1);
 	}
-	
+
 	private static String getWinnerMove() {
 		if (winner.contentEquals("player"))
 			return playerMove;
 		else
 			return computerMove;
 	}
-	
+
 	private static String getLoserMove() {
 		if (winner.contentEquals("player"))
 			return computerMove;
 		else
 			return playerMove;
 	}
-	
+
 	private static String getWinnerName() {
 		if (winner.contentEquals("computer"))
 			return "the computer";
 		else
 			return playerName;
 	}
-	
+
 	private static void playAgainPrompt() {
 		System.out.println("\nWould you like to play again?");
 		System.out.print("Y/N: ");
@@ -165,11 +161,11 @@ public class RockPaperScissors {
 		if (response.contentEquals("y") ||
 			response.contentEquals("Y") ||
 			response.contentEquals("yes"))
-			playAgain = true;
+			playerWantsToPlay = true;
 		else
-			playAgain = false;
+			playerWantsToPlay = false;
 	}
-	
+
 	private static void displayExitMessage() {
 		System.out.println("\nThanks for playing!");
 	}
